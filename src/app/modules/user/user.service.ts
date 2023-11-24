@@ -6,7 +6,13 @@ const createUserIntoDB = async (userData: TUser) => {
     throw new Error('User already exists!');
   }
   const result = await User.create(userData);
-  return result;
+
+  const resultWithoutPassword: any = {
+    ...result.toObject(),
+    password: undefined,
+  };
+
+  return resultWithoutPassword;
 };
 
 const getAllUsersFromDB = async () => {
@@ -18,7 +24,22 @@ const getAllUsersFromDB = async () => {
 };
 
 const getSingleUserFromDB = async (userId: number) => {
-  const result = await User.aggregate([{ $match: { userId } }]);
+  const result = await User.aggregate([
+    { $match: { userId } },
+    {
+      $project: {
+        userId: 1,
+        username: 1,
+        fullName: 1,
+        age: 1,
+        email: 1,
+        isActive: 1,
+        hobbies: 1,
+        address: 1,
+        orders: 1,
+      },
+    },
+  ]);
   return result;
 };
 
