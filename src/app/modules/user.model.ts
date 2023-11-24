@@ -55,6 +55,7 @@ const userSchema = new Schema<TUser, UserModel>({
 });
 
 userSchema.pre('save', async function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this;
   user.password = await bcrypt.hash(
     user.password,
@@ -62,7 +63,6 @@ userSchema.pre('save', async function (next) {
   );
   next();
 });
-
 
 userSchema.statics.isUserExists = async function (userId: number) {
   const existingUser = await User.findOne({ userId });

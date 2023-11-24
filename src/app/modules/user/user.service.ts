@@ -7,7 +7,7 @@ const createUserIntoDB = async (userData: TUser) => {
   }
   const result = await User.create(userData);
 
-  const resultWithoutPassword: any = {
+  const resultWithoutPassword: unknown = {
     ...result.toObject(),
     password: undefined,
   };

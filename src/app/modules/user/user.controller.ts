@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 import { UserServices } from './user.service';
 import userValidationSchema from './user.validation';
@@ -31,6 +32,7 @@ const getAllUsers = async (req: Request, res: Response) => {
       message: 'Users fetched successfully!',
       data: result,
     });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     res.status(500).json({
       success: false,
@@ -123,7 +125,7 @@ const deleteUser = async (req: Request, res: Response) => {
         },
       });
     } else {
-      const result = await UserServices.deleteUserFromDB(Number(userId));
+      await UserServices.deleteUserFromDB(Number(userId));
 
       res.status(200).json({
         success: true,
@@ -157,10 +159,7 @@ const addNewProduct = async (req: Request, res: Response) => {
     } else {
       const productData = req.body;
 
-      const result = await UserServices.addNewProductIntoDB(
-        productData,
-        Number(userId),
-      );
+      await UserServices.addNewProductIntoDB(productData, Number(userId));
 
       res.status(200).json({
         success: true,
