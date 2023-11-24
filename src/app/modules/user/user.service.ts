@@ -46,6 +46,14 @@ const addNewProductIntoDB = async (
   return result;
 };
 
+const getUserOrdersFromDB = async (userId: number) => {
+  const result = await User.aggregate([
+    { $match: { userId } },
+    { $project: { orders: 1 } },
+  ]);
+  return result;
+};
+
 export const UserServices = {
   createUserIntoDB,
   getAllUsersFromDB,
@@ -53,4 +61,5 @@ export const UserServices = {
   updateUserIntoDB,
   deleteUserFromDB,
   addNewProductIntoDB,
+  getUserOrdersFromDB
 };
