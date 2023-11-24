@@ -224,24 +224,14 @@ const getTotalPriceOfOrders = async (req: Request, res: Response) => {
         },
       });
     } else {
-      const orders = await UserServices.getUserOrdersFromDB(Number(userId));
-
-      let totalPrice = 0;
-
-      for (const order of orders) {
-        if (order.price !== undefined && order.quantity !== undefined) {
-          console.log(`Price: ${order.price}, Quantity: ${order.quantity}`);
-          totalPrice += order.price * order.quantity;
-        }
-      }
-  
+      const result = await UserServices.calculateOrderPriceFromDB(
+        Number(userId),
+      );
 
       res.status(200).json({
         success: true,
         message: 'Total price calculated successfully!',
-        data: {
-          totalPrice: totalPrice.toFixed(2),
-        },
+        data: result[0],
       });
     }
   } catch (err: any) {
