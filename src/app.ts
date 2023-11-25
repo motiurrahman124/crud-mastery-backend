@@ -12,8 +12,10 @@ app.use(cors());
 app.use('/api/users', UserRoutes);
 
 const getAController = (req: Request, res: Response) => {
-  const a = 'Welcome to crud mastery backend server!';
-  res.send(a);
+  res.status(200).json({
+    success: true,
+    message: 'Welcome to crud mastery backend server!',
+  });
 };
 
 app.get('/', getAController);
