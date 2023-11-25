@@ -3,7 +3,7 @@ import { TUser, TUserOrders } from './user.interface';
 
 const createUserIntoDB = async (userData: TUser) => {
   if (await User.isUserExists(userData.userId)) {
-    throw new Error('User already exists!');
+    throw new Error('User Id should be unique!');
   }
   const result = await User.create(userData);
 
